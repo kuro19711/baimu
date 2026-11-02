@@ -1,0 +1,7 @@
+interface:
+  display_name: "九州百慕"
+  short_description: "连接百慕本机接口，剪辑、字幕对齐、素材重连、历史恢复与剪映交接"
+  default_prompt: "使用 $baimu 检查当前百慕版本和工程，按我的要求剪辑、制作字幕、重连素材或恢复指定历史，并回读核对结果。"
+
+policy:
+  allow_implicit_invocation: true
