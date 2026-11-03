@@ -1,5 +1,15 @@
 # 百慕本机 API 速查
 
+## GitHub 更新检查
+
+`status` 的 `updates` 与 `check-updates` 共用随技能安装的 `scripts/baimu_updates.py`，旧版软件也能检查。`check-updates --force` 用于人工立即重查。
+
+实际请求 GitHub 的 `https://github.com/kuro19711/baimu/releases/latest`，跟随公开重定向取得正式发布标签；不把源码提交当作软件更新。更新模块不使用本机会话令牌，也不上传工程信息。
+
+缓存位于 `%LOCALAPPDATA%\MuXuStudio\updates\state.json`，按电脑本地自然日记录尝试日期、成功结果和已提醒版本。OS 文件锁覆盖“检查日期→联网→写入”，保证多个对话/进程自动检查去重；检查失败或中断也占用当天自动尝试，人工可用 `--force` 重试。`cached=true` 表示复用记录；`status=error/interrupted/unavailable` 不能说已确认最新版。仅 `notify=true` 时主动提醒，用户主动查询时仍可展示缓存结果。
+
+集成更新模块的软件提供 `GET /api/updates` 和 `POST /api/updates/check`，后者接受布尔值 `force`、`claim_notice`。软件与技能使用同一用户级缓存；这些接口需要本机鉴权，不执行安装或重启。旧版无此接口时继续使用随技能脚本。
+
 ## 内置审核 skill 与本集选择
 
 - `review-skills`：GET `/api/review-skills`，返回 `review`、`repair` Markdown、`revision` 和解析的 `sections`。
