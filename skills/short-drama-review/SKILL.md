@@ -2,7 +2,7 @@
 name: short-drama-review
 description: 审核短剧实际成片并汇报问题，人工调整修改意见后通过百慕返修和复审。
 metadata:
-  version: "2026.11.02.4"
+  version: "2026.11.03.1"
 ---
 
 # 短剧审核与返修
@@ -13,7 +13,7 @@ metadata:
 
 百慕工程使用相邻的 [baimu 技能](../baimu/SKILL.md)，读取 review-context 和 review-workflow。以软件里当前保存的审核标准、返工方法和本集范围为准。默认全项检查，人工明确排除项按其选择。
 
-打开或接入百慕前，按 baimu 技能检查 GitHub 最新发布；同一次打开流程已检查过就直接继续。
+打开或接入百慕时，沿用 baimu 的 `status` / `check-updates` 结果；检查脚本按自然日跨对话去重，不再单独打开 GitHub 检查。
 
 纯视频或旧版软件未提供规则接口时，读取 [references/rules.md](references/rules.md) 与 [references/repair.md](references/repair.md) 的随包基线，并说明使用了哪个版本。用户本次要求优先，只有影响结果的歧义集中询问。
 
