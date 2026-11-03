@@ -8,13 +8,15 @@
 
 [下载百慕完整包](https://github.com/kuro19711/baimu/releases/latest/download/baimu-windows-x64.zip)
 
-下载完整包后解压，运行“安装百慕.exe”，然后启动百慕。0.6.1 包含软件、运行环境、语音识别模型、两份外置技能与本 SOP，一次下载即可开始。技能位于解压目录的 skills 文件夹，可让 Codex 从这里安装。
+下载完整包后解压，运行“安装百慕.exe”，然后启动百慕。0.6.2 包含软件、运行环境、语音识别模型、两份外置技能与本 SOP，一次下载即可开始。技能位于解压目录的 skills 文件夹，可让 Codex 从这里安装。
 
 本仓库 `skills/` 保存最新外置技能，`builtin-skills/` 保存审核标准与修改方法。给 Codex 下面这句话，让它完成安装，不必再找技能下载地址：
 
 > 从 https://github.com/kuro19711/baimu 安装 skills/baimu 和 skills/short-drama-review。检查已有同名技能并更新原位置，读取 baimu 技能，通过本机接口检查百慕状态。
 
 手动安装时，复制两个完整文件夹到用户或项目的 `.agents/skills`。已在 `.codex/skills` 被当前客户端识别的技能更新原位置，避免重复安装。技能未出现时重新打开 Codex。[官方技能说明](https://learn.chatgpt.com/docs/build-skills)。
+
+软件与外置技能每天首次使用时检查 GitHub 最新正式版，同一天的不同对话和窗口共用检查结果。有新版时提醒一次；在“更多 → 设置 → 关于与更新”可立即重查、查看发布说明和下载。检查失败不影响制作。
 
 ## 让 GPT 带着你做
 
