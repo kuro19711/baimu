@@ -8,7 +8,7 @@
 
 [下载百慕完整包](https://github.com/kuro19711/baimu/releases/latest/download/baimu-windows-x64.zip)
 
-下载完整包后解压，运行“安装百慕.exe”，然后启动百慕。0.6.3 包含软件、运行环境、语音识别模型、两份外置技能与本 SOP，一次下载即可开始。技能位于解压目录的 skills 文件夹，可让 Codex 从这里安装。
+下载完整包后解压，运行“安装百慕.exe”，然后启动百慕。0.6.4 包含软件、运行环境、语音识别模型、两份外置技能与本 SOP，一次下载即可开始。技能位于解压目录的 skills 文件夹，可让 Codex 从这里安装。
 
 本仓库 `skills/` 保存最新外置技能，`builtin-skills/` 保存审核标准与修改方法。给 Codex 下面这句话，让它完成安装，不必再找技能下载地址：
 
