@@ -75,7 +75,10 @@ def file_lock(path, timeout=12):
 
 class UpdateChecker:
     def __init__(self, root=None, fetch=None, now=None):
-        self.root = Path(root) if root is not None else Path(os.environ.get('LOCALAPPDATA', Path.home()/'.local/share'))/'MuXuStudio'/'updates'
+        local = Path(os.environ.get('LOCALAPPDATA', Path.home()/'.local/share'))
+        # Keep one lock/cache shared with older clients during an upgrade.
+        legacy = local/'MuXuStudio'/'updates'
+        self.root = Path(root) if root is not None else (legacy if legacy.is_dir() else local/'Baimu'/'updates').resolve()
         self.fetch = fetch or github_latest
         self.now = now or (lambda: datetime.now().astimezone())
 

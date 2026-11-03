@@ -36,12 +36,20 @@ def read_json(path: Path) -> Any:
         raise BaimuError(f"无法读取 JSON：{path}（{exc}）") from exc
 
 
+def installation_root(local: str) -> Path:
+    roots = [Path(local)/name for name in ('Baimu', 'MuXuStudio')]
+    for root in roots:
+        if (root/'installation.json').is_file():
+            return root
+    return next((root for root in roots if (root/'data/session.json').is_file()), roots[0])
+
+
 def discover(session_file: Path | None = None) -> tuple[str, str, Path]:
     local_app_data = os.environ.get("LOCALAPPDATA")
     if not local_app_data:
         raise BaimuError("缺少 LOCALAPPDATA，无法发现百慕安装")
 
-    root = Path(local_app_data) / "MuXuStudio"
+    root = installation_root(local_app_data)
     installation_path = root / "installation.json"
     data_dir = root / "data"
     if installation_path.is_file():
@@ -117,7 +125,7 @@ def installation_info() -> dict[str, Any]:
     local = os.environ.get('LOCALAPPDATA')
     if not local:
         return {}
-    path = Path(local) / 'MuXuStudio' / 'installation.json'
+    path = installation_root(local) / 'installation.json'
     if not path.is_file():
         return {}
     record = read_json(path)
