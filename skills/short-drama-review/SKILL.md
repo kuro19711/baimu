@@ -2,7 +2,7 @@
 name: short-drama-review
 description: 审核短剧实际成片并汇报问题，人工调整修改意见后通过百慕返修和复审。
 metadata:
-  version: "2026.11.03.1"
+  version: "2026.11.03.2"
 ---
 
 # 短剧审核与返修
