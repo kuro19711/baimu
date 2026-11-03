@@ -2,7 +2,7 @@
 name: baimu
 description: 通过九州百慕本机接口读取、检查和修改真实剪辑工程。用户提到百慕、百慕工程，或要求在百慕中剪辑、导出、交接剪映、按 TXT/粘贴对白对齐字幕或按音频自动做字幕时使用；不用于脱离百慕工程的通用创作建议或单纯生成媒体。
 metadata:
-  version: "2026.11.02.4"
+  version: "2026.11.03.1"
 ---
 
 # 九州百慕
@@ -13,7 +13,7 @@ metadata:
 
 ## 连接
 
-每次通过本技能打开或接入百慕前，查看 [GitHub 最新发布](https://github.com/kuro19711/baimu/releases/latest)，对比本机版本与发布说明；有新版时简要提醒并给出更新链接，已是最新版则直接继续，检查失败也不阻塞使用。这里只检查更新，不自动安装或重启；同一次打开流程只检查一次。
+接入时运行 `status`，其中的 `updates` 会检查 GitHub 最新正式发布。软件尚未启动时用 `check-updates`。检查脚本按电脑本地自然日共享缓存和进程锁，不同对话、工程和软件窗口当天只自动联网检查一次；失败也记录当天尝试。仅当 `notify=true` 时主动提醒并附 `latest.release_url`，其它情况继续任务，不再另开网页重复检查。用户要求立即检查时运行 `check-updates --force`；检查不会自动安装或重启软件。
 
 1. 首先运行客户端的 `status`，读取后台实际版本、安装记录和包内构建号。同一软件版本可能有多个构建；安装记录不能证明当前后台已切换，也不能证明每个功能都已验收。
 2. 客户端从 `%LOCALAPPDATA%\MuXuStudio\installation.json` 找到数据目录，再读取
@@ -27,6 +27,8 @@ Python。先解析本 Skill 目录的绝对路径，不要复制或临时重写�
 
 ```text
 baimu_client.py status
+baimu_client.py check-updates
+baimu_client.py check-updates --force
 baimu_client.py projects
 baimu_client.py get-project PROJECT_ID
 baimu_client.py native-timeline PROJECT_ID
