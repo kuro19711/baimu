@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import os
 import sys
@@ -16,6 +17,14 @@ from typing import Any
 
 class BaimuError(RuntimeError):
     pass
+
+
+def check_updates(version, force=False):
+    path = Path(__file__).with_name('baimu_updates.py')
+    spec = importlib.util.spec_from_file_location('baimu_daily_updates', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.UpdateChecker().check(version, force=force, claim_notice=True)
 
 
 def read_json(path: Path) -> Any:
@@ -244,6 +253,8 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("status")
+    updates = subparsers.add_parser('check-updates')
+    updates.add_argument('--force', action='store_true', help='手动立即检查 GitHub，忽略当天缓存')
     subparsers.add_parser("projects")
     subparsers.add_parser('library')
     subparsers.add_parser('fonts')
@@ -322,12 +333,24 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def execute(args: argparse.Namespace) -> Any:
+    if args.command == 'check-updates':
+        version = installation_info().get('version', 'unknown')
+        source = 'installed'
+        try:
+            client = Client(args.timeout, args.session_file) if args.session_file is not None else Client(args.timeout)
+            version = client.request('GET', '/api/identity')['version']
+            source = 'running'
+        except (BaimuError, KeyError):
+            pass
+        return dict(check_updates(version, force=args.force), version_source=source)
     client = Client(args.timeout, args.session_file) if args.session_file is not None else Client(args.timeout)
     if args.command == "status":
+        identity = client.request('GET', '/api/identity')
         return {
-            "identity": client.request("GET", "/api/identity"),
+            "identity": identity,
             "health": client.request("GET", "/api/health"),
             "installation": installation_info(),
+            "updates": check_updates(identity.get('version', 'unknown')),
         }
     if args.command == "projects":
         return summarize_projects(client.request("GET", "/api/bootstrap"))
